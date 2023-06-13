@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/Music/stinger-2021-08-17_-_8_Bit_Nostalgia_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=1]
+[ext_resource path="res://fonts/Godot FontPack/fonts/xolonium/Xolonium.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Scenes/GameOverScreen.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.388235, 0.25098, 0.25098, 1 )
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color( 0.784314, 0.113725, 0.113725, 1 )
+border_blend = true
+
+[node name="GameOverScreen" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 310.0
+margin_bottom = 170.0
+
+[node name="Rows" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+margin_right = 300.0
+margin_bottom = 160.0
+custom_constants/separation = 20
+
+[node name="Game Over" type="Label" parent="PanelContainer/MarginContainer/Rows"]
+margin_right = 300.0
+margin_bottom = 20.0
+custom_colors/font_color = Color( 0.960784, 0.113725, 0.113725, 1 )
+custom_colors/font_color_shadow = Color( 0.0196078, 0.0196078, 0.0196078, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Game Over"
+align = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/MarginContainer/Rows"]
+margin_top = 40.0
+margin_right = 300.0
+margin_bottom = 107.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/Rows/CenterContainer"]
+margin_left = 107.0
+margin_right = 192.0
+margin_bottom = 67.0
+custom_constants/separation = 15
+
+[node name="Restart" type="Button" parent="PanelContainer/MarginContainer/Rows/CenterContainer/VBoxContainer"]
+margin_right = 85.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 2 )
+text = " Restart "
+
+[node name="Quit" type="Button" parent="PanelContainer/MarginContainer/Rows/CenterContainer/VBoxContainer"]
+margin_top = 41.0
+margin_right = 85.0
+margin_bottom = 67.0
+custom_fonts/font = ExtResource( 2 )
+text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/Rows/CenterContainer/VBoxContainer/Restart" to="." method="_on_Restart_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/Rows/CenterContainer/VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

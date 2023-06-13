@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Gun.wav-79d7f25b2faf7b09d25496c6a35fd74e.sample"
+
+[deps]
+
+source_file="res://assets/Sound Effects/Gun.wav"
+dest_files=[ "res://.import/Gun.wav-79d7f25b2faf7b09d25496c6a35fd74e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

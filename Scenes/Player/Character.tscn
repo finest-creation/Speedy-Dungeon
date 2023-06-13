@@ -1,0 +1,160 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://assets/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/knight_idle_spritesheet.png" type="Texture" id=1]
+[ext_resource path="res://assets/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/knight_run_spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Player/Character.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Player/Sword Slash.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/v1.1 dungeon crawler 16X16 pixel pack/heroes/knight/weapon_sword_1.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/Enemies/Stats.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/Sound Effects/Hurt.wav" type="AudioStream" id=7]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("running:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+length = 0.55
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "running"
+length = 0.55
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("running:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "running"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
+
+[sub_resource type="AnimationNodeStateMachine" id=6]
+states/idle/node = SubResource( 8 )
+states/idle/position = Vector2( 376.333, 101.667 )
+states/running/node = SubResource( 9 )
+states/running/position = Vector2( 629.667, 101.667 )
+transitions = [ "idle", "running", SubResource( 10 ), "running", "idle", SubResource( 11 ) ]
+start_node = "idle"
+graph_offset = Vector2( -40.2284, -14 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=7]
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 4.5, 3 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 8.5, 10 )
+
+[node name="Knight" type="KinematicBody2D"]
+collision_mask = 3
+script = ExtResource( 3 )
+
+[node name="idle" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 6
+
+[node name="running" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/idle = SubResource( 2 )
+anims/running = SubResource( 3 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 6 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 7 )
+
+[node name="hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.5, 4 )
+shape = SubResource( 12 )
+
+[node name="Sword" type="Area2D" parent="."]
+show_behind_parent = true
+
+[node name="Sprite" type="Sprite" parent="Sword"]
+show_behind_parent = true
+position = Vector2( 8, 1 )
+scale = Vector2( 0.66, 0.66 )
+texture = ExtResource( 5 )
+
+[node name="Hitbox" type="Position2D" parent="."]
+
+[node name="Sword Slash" parent="Hitbox" instance=ExtResource( 4 )]
+position = Vector2( 18, 0 )
+
+[node name="Hurtbox" type="Area2D" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( 0.5, 0 )
+shape = SubResource( 13 )
+
+[node name="Stats" parent="." instance=ExtResource( 6 )]
+max_health = 4
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

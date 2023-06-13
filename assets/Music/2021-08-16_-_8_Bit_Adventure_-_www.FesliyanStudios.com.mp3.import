@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3-dd5fd8194cc8194f98169c43e69a355e.mp3str"
+
+[deps]
+
+source_file="res://assets/Music/2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3"
+dest_files=[ "res://.import/2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3-dd5fd8194cc8194f98169c43e69a355e.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
